@@ -1,0 +1,68 @@
+<div class="theme-layout">
+    <!-- Header Start -->
+    {{> topbar}}
+    <!-- Header End -->
+
+    <section>
+        <div class="gap gray-bg">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row" id="page-contents">
+                            <div class="col-lg-3">
+                                <!-- Aside shortcut start -->
+                                {{> aside}}
+                                <!-- Aside shortcut end -->
+                            </div>
+                            <!-- sidebar -->
+                            <div class="col-lg-6">
+
+                                <!-- Add new post area start -->
+                                {{> addpost}}
+                                <!-- Add new post area end -->
+
+                                <div class="loadMore">
+                                    <div class="central-meta item">
+                                        <!-- Post List start -->
+                                        {{> postlisthome}}
+                                        <!-- Post List end -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- centerl meta -->
+                            <div class="col-lg-3">
+                                <aside class="sidebar static">
+                                    <!-- Page info widget start -->
+                                    {{> pageinfo}}
+                                    <!-- Page info widget end -->
+                                    <!-- page like widget -->
+
+                                    <!-- Friendlist sidebar widget start -->
+                                    {{> friendwidget}}
+                                    <!-- Friend sidebar widget end -->
+                                    <!-- friends list sidebar -->
+                                </aside>
+                            </div>
+                            <!-- sidebar -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 
+      <footer>
+         <div class="container">
+          <div class="row">
+            <div class="col-lg-4 col-md-4">
+              <div class="widget"></div>
+            </div>
+          </div>
+        </div>
+      </footer> -->
+    <div class="bottombar">
+        <div class="container">
+            <div class="row"></div>
+        </div>
+    </div>
+</div>
