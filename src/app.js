@@ -3,12 +3,15 @@ const path = require("path");
 const handlebars = require("express-handlebars");
 const { AuthRoutes } = require("./routes");
 const morgan = require("morgan");
+const expressMessages = require("express-messages");
 const flash = require("connect-flash");
+const expressValidator = require("express-validator");
 const session = require("express-session");
 const { json, urlencoded } = require("body-parser");
 const connect_db = require("./Database");
-const flashMiddleware = require("./middlewares");
-const { APP_PORT, APP_SESSION } = require("./config");
+const { APP_PORT } = require("./config");
+const passport = require("passport");
+
 // Initializing express server
 const app = express();
 
@@ -35,28 +38,70 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static("src/public"));
 
 // Morgan
-app.use(morgan("dev"));
+app.use(morgan('combined'));
 
 // Body parser
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
 // Express Session
-app.use(session(APP_SESSION));
+app.use(
+  session({
+    key: "user_sid",
+    secret: "aXyr7hFL2",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: false,
+    },
+  })
+);
+
+// Express Message Middleware
 
 // Flash messages middleware
 app.use(flash());
+app.use((req, res, next) => {
+  res.locals.messages = expressMessages(req, res);
+  next();
+});
+
+// Express validator middleware
+app.use(
+  expressValidator({
+    errorFormatter: function (param, msg, value) {
+      let namespace = param.split("."),
+        root = namespace.shift(),
+        formParam = root;
+
+      while (namespace.length) {
+        formParam += "[" + namespace.shift() + "]";
+      }
+
+      return {
+        param: formParam,
+        msg: msg,
+        value: value,
+      };
+    },
+  })
+);
+
+// Passport config
+require("./config/passport")(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Global variables
-app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    next();
+app.get("*", (req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
 });
 
 /**
  * ROUTES
  */
+
 app.use("/", AuthRoutes);
 
 // Run server

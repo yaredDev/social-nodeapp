@@ -4,12 +4,4 @@ module.exports = {
   APP_ENV: "development",
   APP_URL: "localhost",
   APP_PORT: 3000,
-  APP_SESSION: {
-    secret: "aXyr7hFL2",
-    resave: true,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,
-    },
-  },
 };

@@ -1,3 +1,17 @@
-const { LoginView, LogIn, Register, RegisterView, HomePage } = require("./auth_controller");
+const {
+  ensureAuthenticated,
+  LoginView,
+  LogIn,
+  Register,
+  RegisterView,
+  HomePage,
+} = require("./auth_controller");
 
-module.exports = { LoginView, LogIn, Register, RegisterView, HomePage };
+module.exports = {
+  ensureAuthenticated,
+  LoginView,
+  LogIn,
+  Register,
+  RegisterView,
+  HomePage,
+};

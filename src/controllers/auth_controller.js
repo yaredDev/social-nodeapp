@@ -1,41 +1,24 @@
 const { User } = require("../models");
+const passport = require("passport");
+const flash = require("connect-flash");
 
-const LogIn = async (req, res) => {
-  const { username, password } = req.body;
-  let errors = [];
-
-  // console.log(username);
-
-  try {
-    const user = await User.findOne({ username: username });
-    const isMatch = await user.matchPassword(password);
-
-    if (username == null || password == null) {
-      errors.push({ msg: "You must provide username and password to login" });
-      return res.render("/login", {
-        errors,
-        username,
-        password,
-      });
-    }
-
-    if (!user && !isMatch) {
-      req.flash("errors", "User does not exist");
-      errors.push({ msg: "Wrong username or password" });
-      res.render("/login", {
-        errors,
-        username,
-        password,
-      });
-    }
-
-    if (isMatch) {
-      req.flash("success", "Login successfully");
-      res.redirect("/");
-    }
-  } catch (err) {
-    errors.push({ msg: err.message });
+const ensureAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    console.log("Not allowed to view this content");
+    flash("error", "You are not logged in");
+    res.redirect("/login");
   }
+};
+
+const LogIn = async (req, res, next) => {
+  // Log in user using passport
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })(req, res, next);
 };
 
 const LoginView = async (req, res) => {
@@ -105,9 +88,24 @@ const RegisterView = async (req, res) => {
 
 // Homepage controller
 const HomePage = async (req, res) => {
-  const username = req.session.username;
-  res.render("home", { username: username });
+  // req.session.user = User
+  console.log(req.session.user);
+  console.log("Home page", req.sessionID);
+  console.log(req.session);
+  req.flash("success", "Hello");
+  res.render("home", {
+    name: req.user.name,
+    username: req.user.username,
+    email: req.user.email,
+  });
 };
 
 // Export functions
-module.exports = { LoginView, LogIn, Register, RegisterView, HomePage };
+module.exports = {
+  ensureAuthenticated,
+  LoginView,
+  LogIn,
+  Register,
+  RegisterView,
+  HomePage,
+};
