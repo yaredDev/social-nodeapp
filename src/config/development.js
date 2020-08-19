@@ -1,7 +1,10 @@
 module.exports = {
-  APP_DB_URL: "mongodb://localhost:27017/",
-  APP_DB_NAME: "sogesha",
-  APP_ENV: "development",
-  APP_URL: "localhost",
-  APP_PORT: 3000,
+  APP_HOST: "localhost",
+  APP_PORT: "3000",
+  DB_HOST: "localhost",
+  DB_NAME: "social",
+  DB_USER: "postgres",
+  DB_PORT: "5432",
+  DB_PASS: "root",
+  DB_DIALECT: "postgres",
 };

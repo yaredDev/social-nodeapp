@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Post } = require("../Database");
 const passport = require("passport");
 const flash = require("connect-flash");
 
@@ -33,12 +33,10 @@ const Register = async (req, res, next) => {
     errors.push({ msg: "Fill all the fields" });
 
   if (username.length < 3)
-    errors.push({ msg: "Username must have atleast four character" });
+    errors.push({ msg: "Username must have at least four character" });
 
   if (password.length < 6) errors.push({ msg: "Password is too short" });
 
-  // if (!chkbox)
-  //   errors.push({ msg: "You must agree to the terms and conditions" });
 
   if (errors.length > 0) {
     res.render("register", {
@@ -50,7 +48,7 @@ const Register = async (req, res, next) => {
       chkbox,
     });
   } else {
-    const user = await User.findOne({ username: username });
+    const user = await User.findOne({ where: { username: username } });
     if (user) {
       errors.push({ msg: "Username has taken" });
       res.render("register", {
@@ -62,22 +60,20 @@ const Register = async (req, res, next) => {
         chkbox,
       });
     } else {
-      await User.create(
-        {
-          name: fullname,
-          username: username,
-          password: password,
-          email: email,
-          gender: gender,
-        },
-        (err, user) => {
-          if (err) return next(err);
-          else {
-            req.flash("success", "You are now registered, Login");
-            res.redirect("/login");
-          }
-        }
-      );
+      const newUser = await User.create({
+        fullname: fullname,
+        username: username,
+        password: password,
+        email: email,
+        gender: gender,
+      });
+
+      if (newUser) {
+        req.flash("success", "Successfully registered");
+        res.redirect("login");
+      } else {
+        res.render("register");
+      }
     }
   }
 };
@@ -89,12 +85,10 @@ const RegisterView = async (req, res) => {
 // Homepage controller
 const HomePage = async (req, res) => {
   // req.session.user = User
-  console.log(req.session.user);
   console.log("Home page", req.sessionID);
-  console.log(req.session);
   req.flash("success", "Hello");
   res.render("home", {
-    name: req.user.name,
+    name: req.user.fullname,
     username: req.user.username,
     email: req.user.email,
   });

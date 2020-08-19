@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const handlebars = require("express-handlebars");
+const handlebars = require('express-handlebars');
 const { AuthRoutes } = require("./routes");
 const morgan = require("morgan");
 const expressMessages = require("express-messages");
@@ -8,14 +8,12 @@ const flash = require("connect-flash");
 const expressValidator = require("express-validator");
 const session = require("express-session");
 const { json, urlencoded } = require("body-parser");
-const connect_db = require("./Database");
+require("./Database");
 const { APP_PORT } = require("./config");
 const passport = require("passport");
 
 // Initializing express server
 const app = express();
-
-connect_db();
 
 // Configure template engine and main template file
 app.engine(
@@ -38,7 +36,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static("src/public"));
 
 // Morgan
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 
 // Body parser
 app.use(json());
