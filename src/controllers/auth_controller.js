@@ -2,7 +2,6 @@ const { User, Post } = require("../Database");
 const passport = require("passport");
 const flash = require("connect-flash");
 
-
 const ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
@@ -85,24 +84,20 @@ const HomePage = async (req, res) => {
   // req.session.user = User
   req.flash("success", "Hello");
 
-
   try {
     const posts = await Post.findAll({
       include: {
         model: User,
         required: true,
-        attributes: ['id', 'fullname'],
-        where: {
-          id:6
-        }
-      }
-    })
-    console.log(posts.length)
+        attributes: ["id", "fullname", "dp"],
+      },
+    });
+    console.log(posts.length);
 
     let postsArray = [];
 
     for (let i = 0; i < posts.length; i++) {
-
+      let imgUrl = `/uploads/${posts[i].User.dp}`;
       let post = {
         userId: posts[i].UserId,
         postId: posts[i].id,
@@ -111,24 +106,21 @@ const HomePage = async (req, res) => {
         created: posts[i].createdAt,
         fullname: posts[i].User.fullname,
         username: posts[i].User.username,
-        profile_pic: posts[i].User.dp,
+        profile_pic: imgUrl
       };
-      postsArray.push(post)
+      postsArray.push(post);
     }
-    console.log(postsArray)
-     res.render("home", {
-       name: req.user.fullname,
-       username: req.user.username,
-       email: req.user.email,
-       dp: req.user.dp,
-       posts: postsArray,
-     });
-    
+    console.log(postsArray);
+    res.render("home", {
+      name: req.user.fullname,
+      username: req.user.username,
+      email: req.user.email,
+      dp: `/uploads/${req.user.dp}`,
+      posts: postsArray,
+    });
   } catch (err) {
-    console.log(err)
-    
+    console.log(err);
   }
- 
 };
 
 // Export functions

@@ -1,6 +1,6 @@
 module.exports = {
   APP_HOST: "localhost",
-  APP_PORT: "3000",
+  APP_PORT: "5000",
   DB_HOST: "localhost",
   DB_NAME: "social",
   DB_USER: "postgres",

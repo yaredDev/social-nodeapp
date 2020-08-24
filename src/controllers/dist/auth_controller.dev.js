@@ -161,7 +161,7 @@ var RegisterView = function RegisterView(req, res) {
 
 
 var HomePage = function HomePage(req, res) {
-  var posts, postsArray, i, post;
+  var posts, postsArray, i, imgUrl, post;
   return regeneratorRuntime.async(function HomePage$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
@@ -174,10 +174,7 @@ var HomePage = function HomePage(req, res) {
             include: {
               model: User,
               required: true,
-              attributes: ['id', 'fullname'],
-              where: {
-                id: 6
-              }
+              attributes: ["id", "fullname", "dp"]
             }
           }));
 
@@ -187,6 +184,7 @@ var HomePage = function HomePage(req, res) {
           postsArray = [];
 
           for (i = 0; i < posts.length; i++) {
+            imgUrl = "/uploads/".concat(posts[i].User.dp);
             post = {
               userId: posts[i].UserId,
               postId: posts[i].id,
@@ -195,7 +193,7 @@ var HomePage = function HomePage(req, res) {
               created: posts[i].createdAt,
               fullname: posts[i].User.fullname,
               username: posts[i].User.username,
-              profile_pic: posts[i].User.dp
+              profile_pic: imgUrl
             };
             postsArray.push(post);
           }
@@ -205,7 +203,7 @@ var HomePage = function HomePage(req, res) {
             name: req.user.fullname,
             username: req.user.username,
             email: req.user.email,
-            dp: req.user.dp,
+            dp: "/uploads/".concat(req.user.dp),
             posts: postsArray
           });
           _context5.next = 15;
