@@ -2,6 +2,7 @@ const { User, Post } = require("../Database");
 const passport = require("passport");
 const flash = require("connect-flash");
 
+
 const ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
@@ -26,7 +27,7 @@ const LoginView = async (req, res) => {
 };
 
 const Register = async (req, res, next) => {
-  const { fullname, username, password, gender, email, chkbox } = req.body;
+  const { fullname, username, password, gender, email } = req.body;
   const errors = [];
 
   if (!fullname || !username || !password || !gender || !email)
@@ -37,7 +38,6 @@ const Register = async (req, res, next) => {
 
   if (password.length < 6) errors.push({ msg: "Password is too short" });
 
-
   if (errors.length > 0) {
     res.render("register", {
       errors,
@@ -45,7 +45,6 @@ const Register = async (req, res, next) => {
       username,
       password,
       email,
-      chkbox,
     });
   } else {
     const user = await User.findOne({ where: { username: username } });
@@ -57,7 +56,6 @@ const Register = async (req, res, next) => {
         username,
         password,
         email,
-        chkbox,
       });
     } else {
       const newUser = await User.create({
@@ -85,13 +83,52 @@ const RegisterView = async (req, res) => {
 // Homepage controller
 const HomePage = async (req, res) => {
   // req.session.user = User
-  console.log("Home page", req.sessionID);
   req.flash("success", "Hello");
-  res.render("home", {
-    name: req.user.fullname,
-    username: req.user.username,
-    email: req.user.email,
-  });
+
+
+  try {
+    const posts = await Post.findAll({
+      include: {
+        model: User,
+        required: true,
+        attributes: ['id', 'fullname'],
+        where: {
+          id:6
+        }
+      }
+    })
+    console.log(posts.length)
+
+    let postsArray = [];
+
+    for (let i = 0; i < posts.length; i++) {
+
+      let post = {
+        userId: posts[i].UserId,
+        postId: posts[i].id,
+        postImg: posts[i].postImg,
+        content: posts[i].contentText,
+        created: posts[i].createdAt,
+        fullname: posts[i].User.fullname,
+        username: posts[i].User.username,
+        profile_pic: posts[i].User.dp,
+      };
+      postsArray.push(post)
+    }
+    console.log(postsArray)
+     res.render("home", {
+       name: req.user.fullname,
+       username: req.user.username,
+       email: req.user.email,
+       dp: req.user.dp,
+       posts: postsArray,
+     });
+    
+  } catch (err) {
+    console.log(err)
+    
+  }
+ 
 };
 
 // Export functions

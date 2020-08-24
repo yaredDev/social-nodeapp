@@ -1,20 +1,20 @@
-const { DataTypes, fn, hooks } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 module.exports = (Database) => {
-  return Database.define("Post", {
+  return Database.define("Comment", {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
       allowNull: false,
     },
-    contentText: {
+    cmtText: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    postImg: {
+    cmtImg: {
       type: DataTypes.STRING,
-      allowNull: true
-    }
+      allowNull: true,
+    },
   });
 };

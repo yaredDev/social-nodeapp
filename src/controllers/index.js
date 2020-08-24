@@ -7,6 +7,8 @@ const {
   HomePage,
 } = require("./auth_controller");
 
+const { newPost, postComment } = require("./post_controller");
+
 module.exports = {
   ensureAuthenticated,
   LoginView,
@@ -14,4 +16,6 @@ module.exports = {
   Register,
   RegisterView,
   HomePage,
+  newPost,
+  postComment,
 };

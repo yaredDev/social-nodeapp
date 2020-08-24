@@ -1,7 +1,9 @@
 const express = require("express");
 const path = require("path");
+const moment = require('moment')
 const handlebars = require('express-handlebars');
-const { AuthRoutes } = require("./routes");
+const multer = require('multer')
+const { AuthRoutes, PostRoutes } = require("./routes");
 const morgan = require("morgan");
 const expressMessages = require("express-messages");
 const flash = require("connect-flash");
@@ -35,6 +37,9 @@ app.set("views", path.join(__dirname, "views"));
 // Tell express to allow usage of static files from 'PUBLIC' folder
 app.use(express.static("src/public"));
 
+// File upload routes
+app.use(express.static('uploads/'))
+
 // Morgan
 app.use(morgan('dev'));
 
@@ -55,6 +60,9 @@ app.use(
   })
 );
 
+// Moment Library
+moment().format()
+
 // Express Message Middleware
 
 // Flash messages middleware
@@ -64,26 +72,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Express validator middleware
-app.use(
-  expressValidator({
-    errorFormatter: function (param, msg, value) {
-      let namespace = param.split("."),
-        root = namespace.shift(),
-        formParam = root;
-
-      while (namespace.length) {
-        formParam += "[" + namespace.shift() + "]";
-      }
-
-      return {
-        param: formParam,
-        msg: msg,
-        value: value,
-      };
-    },
-  })
-);
 
 // Passport config
 require("./config/passport")(passport);
@@ -101,6 +89,7 @@ app.get("*", (req, res, next) => {
  */
 
 app.use("/", AuthRoutes);
+app.use('/post', PostRoutes)
 
 // Run server
 app.listen(APP_PORT, () => {

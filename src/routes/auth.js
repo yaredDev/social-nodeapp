@@ -21,9 +21,6 @@ router.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-// Register Route
-router.post("/register", Register);
-
 // Homepage route
 router.get("/", ensureAuthenticated, HomePage);
 

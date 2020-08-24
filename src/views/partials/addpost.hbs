@@ -1,35 +1,17 @@
 <div class="central-meta">
   <div class="new-postbox">
     <figure>
-      <img src="images/resources/admin2.jpg" alt="" />
+      <img src="uploads/{{default_dp.png}}" alt="" />
     </figure>
     <div class="newpst-input">
-      <form method="post">
-        <textarea rows="2" placeholder="write something"></textarea>
+      <form method="post" action="/post/new_post" enctype="multipart/form-data">
+        <textarea rows="2" name="postContent" placeholder="What's on your mind"></textarea>
         <div class="attachments">
           <ul>
             <li>
-              <i class="fa fa-music"></i>
+              <i style="font-size: larger;" class="fa fa-image"></i>
               <label class="fileContainer">
-                <input type="file" />
-              </label>
-            </li>
-            <li>
-              <i class="fa fa-image"></i>
-              <label class="fileContainer">
-                <input type="file" />
-              </label>
-            </li>
-            <li>
-              <i class="fa fa-video-camera"></i>
-              <label class="fileContainer">
-                <input type="file" />
-              </label>
-            </li>
-            <li>
-              <i class="fa fa-camera"></i>
-              <label class="fileContainer">
-                <input type="file" />
+                <input type="file" name="file" />
               </label>
             </li>
             <li>

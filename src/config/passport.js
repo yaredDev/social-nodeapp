@@ -18,8 +18,7 @@ const passportLogin = (passport) => {
             return done(null, false, { msg: 'Invalid username or password' })
           }
           let isMatch = await user.matchPassword(password);
-          console.log('isMatch ', isMatch)
-          console.log('Users ', user)
+
           if (user && isMatch) {
             return done(null, user);
           }

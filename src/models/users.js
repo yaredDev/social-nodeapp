@@ -34,8 +34,9 @@ module.exports = (Database) => {
       allowNull: false,
     },
     dp: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       allowNull: true,
+      defaultValue: "default_dp.png",
     },
   });
 
@@ -49,11 +50,7 @@ module.exports = (Database) => {
 
   // Compare password when log in or authenticating
   User.prototype.matchPassword = async function (pass) {
-    const ismatch = await bcrypt.compare(pass, this.password);
-    console.log("Password is matched", ismatch);
-    console.log("Login password ", pass);
-    console.log("Pass hash ", this.password);
-    return ismatch;
+    return await bcrypt.compare(pass, this.password);
   };
 
   return User;
