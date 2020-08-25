@@ -13,36 +13,29 @@ var newPost = function newPost(req, res, next) {
       switch (_context.prev = _context.next) {
         case 0:
           postContent = req.body.postContent;
-          postImage = req.file;
+          postImage = null;
 
-          if (!(postImage == undefined)) {
-            _context.next = 5;
-            break;
+          if (postImage == undefined || postImage == null) {
+            postImage = "";
           }
 
-          postImage = "";
-          return _context.abrupt("return", postImage);
-
-        case 5:
-          console.log("Post content working", postContent);
-          console.log("File content working", postImage);
-
           if (postContent) {
-            _context.next = 9;
+            _context.next = 5;
             break;
           }
 
           return _context.abrupt("return");
 
-        case 9:
-          _context.next = 11;
+        case 5:
+          _context.prev = 5;
+          _context.next = 8;
           return regeneratorRuntime.awrap(Post.create({
             contentText: postContent,
             postImg: postImage.filename,
             UserId: req.user.id
           }));
 
-        case 11:
+        case 8:
           post = _context.sent;
 
           if (post) {
@@ -52,12 +45,20 @@ var newPost = function newPost(req, res, next) {
             req.flash("error", "An error has been encountered");
           }
 
-        case 13:
+          _context.next = 15;
+          break;
+
+        case 12:
+          _context.prev = 12;
+          _context.t0 = _context["catch"](5);
+          console.log(_context.t0);
+
+        case 15:
         case "end":
           return _context.stop();
       }
     }
-  });
+  }, null, null, [[5, 12]]);
 };
 
 var postComment = function postComment(req, res, next) {

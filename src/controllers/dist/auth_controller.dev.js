@@ -8,6 +8,8 @@ var passport = require("passport");
 
 var flash = require("connect-flash");
 
+var moment = require("moment");
+
 var ensureAuthenticated = function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -161,7 +163,7 @@ var RegisterView = function RegisterView(req, res) {
 
 
 var HomePage = function HomePage(req, res) {
-  var posts, postsArray, i, imgUrl, post;
+  var posts, postsArray, i, imgUrl, createTime, post;
   return regeneratorRuntime.async(function HomePage$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
@@ -171,26 +173,27 @@ var HomePage = function HomePage(req, res) {
           _context5.prev = 1;
           _context5.next = 4;
           return regeneratorRuntime.awrap(Post.findAll({
+            order: [["createdAt", "DESC"]],
             include: {
               model: User,
               required: true,
-              attributes: ["id", "fullname", "username", "dp"]
+              attributes: ["id", "fullname", "username", "dp", "createdAt"]
             }
           }));
 
         case 4:
           posts = _context5.sent;
-          console.log(posts.length);
           postsArray = [];
 
           for (i = 0; i < posts.length; i++) {
             imgUrl = "/uploads/".concat(posts[i].User.dp);
+            createTime = moment(posts[i].createdAt);
             post = {
               userId: posts[i].UserId,
               postId: posts[i].id,
               postImg: posts[i].postImg,
               content: posts[i].contentText,
-              created: posts[i].createdAt,
+              created: createTime.fromNow(),
               fullname: posts[i].User.fullname,
               username: posts[i].User.username,
               profile_pic: imgUrl
@@ -198,7 +201,6 @@ var HomePage = function HomePage(req, res) {
             postsArray.push(post);
           }
 
-          console.log(postsArray);
           res.render("home", {
             name: req.user.fullname,
             username: req.user.username,
@@ -206,20 +208,20 @@ var HomePage = function HomePage(req, res) {
             dp: "/uploads/".concat(req.user.dp),
             posts: postsArray
           });
-          _context5.next = 15;
+          _context5.next = 13;
           break;
 
-        case 12:
-          _context5.prev = 12;
+        case 10:
+          _context5.prev = 10;
           _context5.t0 = _context5["catch"](1);
           console.log(_context5.t0);
 
-        case 15:
+        case 13:
         case "end":
           return _context5.stop();
       }
     }
-  }, null, null, [[1, 12]]);
+  }, null, null, [[1, 10]]);
 }; // Export functions
 
 

@@ -17,6 +17,6 @@ var _require4 = require("../controllers"),
     newPost = _require4.newPost,
     postComment = _require4.postComment;
 
-router.post("/new_post", uploadFile.single("file"), ensureAuthenticated, newPost);
+router.post("/new", uploadFile.single("file"), ensureAuthenticated, newPost);
 router.post("/comment/:PostId", ensureAuthenticated, postComment);
 module.exports = router;

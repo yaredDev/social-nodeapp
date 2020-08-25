@@ -1,6 +1,7 @@
 const { User, Post } = require("../Database");
 const passport = require("passport");
 const flash = require("connect-flash");
+const moment = require("moment");
 
 const ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -86,31 +87,33 @@ const HomePage = async (req, res) => {
 
   try {
     const posts = await Post.findAll({
+      order: [["createdAt", "DESC"]],
       include: {
         model: User,
         required: true,
-        attributes: ["id", "fullname", "username", "dp"],
+        attributes: ["id", "fullname", "username", "dp", "createdAt"],
       },
     });
-    console.log(posts.length);
 
     let postsArray = [];
 
     for (let i = 0; i < posts.length; i++) {
       let imgUrl = `/uploads/${posts[i].User.dp}`;
+      let createTime = moment(posts[i].createdAt);
+
       let post = {
         userId: posts[i].UserId,
         postId: posts[i].id,
         postImg: posts[i].postImg,
         content: posts[i].contentText,
-        created: posts[i].createdAt,
+        created: createTime.fromNow(),
         fullname: posts[i].User.fullname,
         username: posts[i].User.username,
         profile_pic: imgUrl,
       };
       postsArray.push(post);
     }
-    console.log(postsArray);
+
     res.render("home", {
       name: req.user.fullname,
       username: req.user.username,

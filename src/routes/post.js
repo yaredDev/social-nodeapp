@@ -8,7 +8,7 @@ const { uploadFile } = require("../config/multer");
 const { newPost, postComment } = require("../controllers");
 
 router.post(
-  "/new_post",
+  "/new",
   uploadFile.single("file"),
   ensureAuthenticated,
   newPost

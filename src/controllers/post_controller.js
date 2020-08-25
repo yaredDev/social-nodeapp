@@ -3,32 +3,32 @@ const fs = require("fs");
 
 const newPost = async (req, res, next) => {
   const { postContent } = req.body;
-  let postImage = req.file;
+  let postImage = null
 
-  if (postImage == undefined) {
+  if (postImage == undefined || postImage==null) {
     postImage = "";
-    return postImage;
   }
-
-  console.log("Post content working", postContent);
-  console.log("File content working", postImage);
 
   if (!postContent) {
     return;
   }
 
-  let post = await Post.create({
-    contentText: postContent,
-    postImg: postImage.filename,
-    UserId: req.user.id,
-  });
+try {
+    let post = await Post.create({
+      contentText: postContent,
+      postImg: postImage.filename,
+      UserId: req.user.id,
+    });
 
-  if (post) {
-    req.flash("success", "Successful");
-    res.redirect("/");
-  } else {
-    req.flash("error", "An error has been encountered");
-  }
+    if (post) {
+      req.flash("success", "Successful");
+      res.redirect("/");
+    } else {
+      req.flash("error", "An error has been encountered");
+    }
+} catch (error) {
+  console.log(error)
+}
 };
 
 const postComment = async (req, res, next) => {

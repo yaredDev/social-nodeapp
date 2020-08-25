@@ -11,6 +11,11 @@
                 <span>published: {{this.created}}</span>
             </div>
             <div class="post-meta">
+                <div class="description">
+                    <p>
+                        {{this.content}}
+                    </p>
+                </div>
                 <img src="/uploads/{{this.postImg}}" alt="" />
                 {{!-- <div class="we-video-info">
                     <ul>
@@ -40,11 +45,7 @@
                         </li>
                     </ul>
                 </div> --}}
-                <div class="description">
-                    <p>
-                        {{this.content}}
-                    </p>
-                </div>
+
             </div>
         </div>
     </div>
