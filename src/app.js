@@ -3,7 +3,7 @@ const path = require("path");
 const moment = require('moment')
 const handlebars = require('express-handlebars');
 const multer = require('multer')
-const { AuthRoutes, PostRoutes } = require("./routes");
+const { AuthRoutes, PostRoutes, profileRoutes } = require("./routes");
 const morgan = require("morgan");
 const expressMessages = require("express-messages");
 const flash = require("connect-flash");
@@ -90,6 +90,7 @@ app.get("*", (req, res, next) => {
 
 app.use("/", AuthRoutes);
 app.use('/post', PostRoutes)
+app.use("/profile", profileRoutes);
 
 // Run server
 app.listen(APP_PORT, () => {

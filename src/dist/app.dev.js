@@ -12,7 +12,8 @@ var multer = require('multer');
 
 var _require = require("./routes"),
     AuthRoutes = _require.AuthRoutes,
-    PostRoutes = _require.PostRoutes;
+    PostRoutes = _require.PostRoutes,
+    profileRoutes = _require.profileRoutes;
 
 var morgan = require("morgan");
 
@@ -93,7 +94,8 @@ app.get("*", function (req, res, next) {
  */
 
 app.use("/", AuthRoutes);
-app.use('/post', PostRoutes); // Run server
+app.use('/post', PostRoutes);
+app.use("/profile", profileRoutes); // Run server
 
 app.listen(APP_PORT, function () {
   console.log("Server is running at port ", APP_PORT);

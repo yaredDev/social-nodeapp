@@ -1,0 +1,119 @@
+<div class="theme-layout">
+    <!-- Header Start -->
+    {{> topbar}}
+    <!-- Header End -->
+
+    <section>
+        {{>profileheader}}
+    </section><!-- top area -->
+
+    <section>
+        <div class="gap gray-bg">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row" id="page-contents">
+                            <div class="col-lg-3">
+                                <aside class="sidebar static">
+                                    <div class="widget stick-widget">
+                                        {{>aside}}
+                                    </div><!-- Shortcuts -->
+                                </aside>
+                            </div><!-- sidebar -->
+                            <div class="col-lg-6">
+                                {{!-- Add new post --}}
+                                {{>addpost}}
+                                <div class="loadMore">
+
+                                    {{!-- Display Posts --}}
+                                    {{>postlisthome}}
+                                    {{!-- Postlist end here --}}
+
+                                </div>
+                            </div><!-- centerl meta -->
+
+                            {{!-- <div class="col-lg-3">
+                                <aside class="sidebar static">
+                                    <div class="widget friend-list stick-widget">
+                                        <h4 class="widget-title">Friends</h4>
+                                        <div id="searchDir"></div>
+                                        <ul id="people-list" class="friendz-list">
+                                            <li>
+                                                <figure>
+                                                    <img src="images/resources/friend-avatar.jpg" alt="">
+                                                    <span class="status f-online"></span>
+                                                </figure>
+                                                <div class="friendz-meta">
+                                                    <a href="time-line.html">bucky barnes</a>
+                                                    <i><a href="https://wpkixx.com/cdn-cgi/l/email-protection"
+                                                            class="__cf_email__"
+                                                            data-cfemail="4136282f352433322e2d25243301262c20282d6f222e2c">[email&#160;protected]</a></i>
+                                                </div>
+                                            </li> 
+                                        </ul>
+                                        <div class="chat-box">
+                                            <div class="chat-head">
+                                                <span class="status f-online"></span>
+                                                <h6>Bucky Barnes</h6>
+                                                <div class="more">
+                                                    <span><i class="ti-more-alt"></i></span>
+                                                    <span class="close-mesage"><i class="ti-close"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="chat-list">
+                                                <ul>
+                                                    <li class="me">
+                                                        <div class="chat-thumb"><img
+                                                                src="images/resources/chatlist1.jpg" alt=""></div>
+                                                        <div class="notification-event">
+                                                            <span class="chat-message-item">
+                                                                Hi James! Please remember to buy the food for
+                                                                tomorrow! I’m gonna be handling the gifts and Jake’s
+                                                                gonna get the drinks
+                                                            </span>
+                                                            <span class="notification-date"><time
+                                                                    datetime="2004-07-24T18:18"
+                                                                    class="entry-date updated">Yesterday at
+                                                                    8:10pm</time></span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="you">
+                                                        <div class="chat-thumb"><img
+                                                                src="images/resources/chatlist2.jpg" alt=""></div>
+                                                        <div class="notification-event">
+                                                            <span class="chat-message-item">
+                                                                Hi James! Please remember to buy the food for
+                                                                tomorrow! I’m gonna be handling the gifts and Jake’s
+                                                                gonna get the drinks
+                                                            </span>
+                                                            <span class="notification-date"><time
+                                                                    datetime="2004-07-24T18:18"
+                                                                    class="entry-date updated">Yesterday at
+                                                                    8:10pm</time></span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <form class="text-box">
+                                                    <textarea placeholder="Post enter to post..."></textarea>
+                                                    <div class="add-smiles">
+                                                        <span title="add icon" class="em em-expressionless"></span>
+                                                    </div>
+                                                    <button type="submit"></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div><!-- friends list sidebar -->
+                                </aside>
+                            </div><!-- sidebar --> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="js/main.min.js"></script>
+<script src="js/script.js"></script>

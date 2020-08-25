@@ -8,6 +8,7 @@ const {
 } = require("./auth_controller");
 
 const { newPost, postComment } = require("./post_controller");
+const { profileView } = require("./profile_controller");
 
 module.exports = {
   ensureAuthenticated,
@@ -18,4 +19,5 @@ module.exports = {
   HomePage,
   newPost,
   postComment,
+  profileView,
 };

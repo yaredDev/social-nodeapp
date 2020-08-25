@@ -174,7 +174,7 @@ var HomePage = function HomePage(req, res) {
             include: {
               model: User,
               required: true,
-              attributes: ["id", "fullname", "dp"]
+              attributes: ["id", "fullname", "username", "dp"]
             }
           }));
 

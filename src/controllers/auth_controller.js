@@ -89,7 +89,7 @@ const HomePage = async (req, res) => {
       include: {
         model: User,
         required: true,
-        attributes: ["id", "fullname", "dp"],
+        attributes: ["id", "fullname", "username", "dp"],
       },
     });
     console.log(posts.length);
@@ -106,7 +106,7 @@ const HomePage = async (req, res) => {
         created: posts[i].createdAt,
         fullname: posts[i].User.fullname,
         username: posts[i].User.username,
-        profile_pic: imgUrl
+        profile_pic: imgUrl,
       };
       postsArray.push(post);
     }
