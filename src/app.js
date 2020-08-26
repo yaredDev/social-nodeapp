@@ -1,8 +1,8 @@
 const express = require("express");
 const path = require("path");
-const moment = require('moment')
-const handlebars = require('express-handlebars');
-const multer = require('multer')
+const moment = require("moment");
+const handlebars = require("express-handlebars");
+const multer = require("multer");
 const { AuthRoutes, PostRoutes, profileRoutes } = require("./routes");
 const morgan = require("morgan");
 const expressMessages = require("express-messages");
@@ -35,13 +35,13 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
 // Tell express to allow usage of static files from 'PUBLIC' folder
-app.use(express.static("src/public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // File upload routes
-app.use(express.static('uploads/'))
+// app.use(express.static("uploads/"));
 
 // Morgan
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 
 // Body parser
 app.use(json());
@@ -61,7 +61,7 @@ app.use(
 );
 
 // Moment Library
-moment().format()
+moment().format();
 
 // Express Message Middleware
 
@@ -71,7 +71,6 @@ app.use((req, res, next) => {
   res.locals.messages = expressMessages(req, res);
   next();
 });
-
 
 // Passport config
 require("./config/passport")(passport);
@@ -89,7 +88,7 @@ app.get("*", (req, res, next) => {
  */
 
 app.use("/", AuthRoutes);
-app.use('/post', PostRoutes)
+app.use("/post", PostRoutes);
 app.use("/profile", profileRoutes);
 
 // Run server

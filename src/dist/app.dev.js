@@ -4,11 +4,11 @@ var express = require("express");
 
 var path = require("path");
 
-var moment = require('moment');
+var moment = require("moment");
 
-var handlebars = require('express-handlebars');
+var handlebars = require("express-handlebars");
 
-var multer = require('multer');
+var multer = require("multer");
 
 var _require = require("./routes"),
     AuthRoutes = _require.AuthRoutes,
@@ -50,11 +50,11 @@ app.set("view engine", "hbs"); // Set a path for views folder
 
 app.set("views", path.join(__dirname, "views")); // Tell express to allow usage of static files from 'PUBLIC' folder
 
-app.use(express["static"]("src/public")); // File upload routes
+app.use(express["static"](path.join(__dirname, "public"))); // File upload routes
+// app.use(express.static("uploads/"));
+// Morgan
 
-app.use(express["static"]('uploads/')); // Morgan
-
-app.use(morgan('dev')); // Body parser
+app.use(morgan("dev")); // Body parser
 
 app.use(json());
 app.use(urlencoded({
@@ -94,7 +94,7 @@ app.get("*", function (req, res, next) {
  */
 
 app.use("/", AuthRoutes);
-app.use('/post', PostRoutes);
+app.use("/post", PostRoutes);
 app.use("/profile", profileRoutes); // Run server
 
 app.listen(APP_PORT, function () {
