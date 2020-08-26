@@ -13,7 +13,7 @@ var newPost = function newPost(req, res, next) {
       switch (_context.prev = _context.next) {
         case 0:
           postContent = req.body.postContent;
-          postImage = null;
+          postImage = req.file;
 
           if (postImage == undefined || postImage == null) {
             postImage = "";

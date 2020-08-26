@@ -3,9 +3,9 @@ const fs = require("fs");
 
 const newPost = async (req, res, next) => {
   const { postContent } = req.body;
-  let postImage = null
+  let postImage = req.file;
 
-  if (postImage == undefined || postImage==null) {
+  if (postImage == undefined || postImage == null) {
     postImage = "";
   }
 
@@ -13,7 +13,7 @@ const newPost = async (req, res, next) => {
     return;
   }
 
-try {
+  try {
     let post = await Post.create({
       contentText: postContent,
       postImg: postImage.filename,
@@ -26,9 +26,9 @@ try {
     } else {
       req.flash("error", "An error has been encountered");
     }
-} catch (error) {
-  console.log(error)
-}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const postComment = async (req, res, next) => {
